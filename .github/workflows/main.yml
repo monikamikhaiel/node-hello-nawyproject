@@ -3,20 +3,17 @@ name: build & deploy
 on:
   workflow_call:
   pull_request:
-  types: [closed]
-  branches:
-    - main
+    types: [closed]
+    branches:
+    - master
     
 jobs:
   build-deploy:
-    name: use swagger to update APIG
     runs-on: ubuntu-latest
     environment: local 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          token: ${{ secrets._USER_TOKEN }}
       - uses: actions/setup-node@v4
         with:
           node-version: 20
