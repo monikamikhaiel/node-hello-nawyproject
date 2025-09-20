@@ -43,4 +43,4 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           push: true
-          tags: us${{ secrets.DOCKERHUB_USERNAME }}/nawy_node_app:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/nawy_node_app:latest
