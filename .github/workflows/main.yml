@@ -56,7 +56,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: local 
     # if: ${{ success() }}
-    needs: [prettier,build-push]
+    needs: [build-push]
     env:
          TF_VAR_DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
          TF_VAR_Github_sha: ${{ needs.build-push.outputs.commit_short_sha }}
