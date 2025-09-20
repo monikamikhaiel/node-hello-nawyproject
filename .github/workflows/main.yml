@@ -51,7 +51,7 @@ jobs:
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/nawy_node_app:${{ env.COMMIT_SHORT_SHA }}
       # - name: edit main.tf 
       #   run: sed -i 's/image     = ".\+",/image     = "${var.DOCKERHUB_USERNAME}/nawy_node_app:${var.Github_sha}"",/' terraform/main.tf
-    deploy:
+  deploy:
     runs-on: ubuntu-latest
     environment: local 
     if: ${{ success() }}
