@@ -8,6 +8,7 @@ Great for testing simple deployments to the cloud
 
 ![alt text](test.drawio.png)
 the CI pipeline consists of 2 main jobs :
-- build-push 
-- deploy 
-`npm start`
+
+- build-push
+- deploy
+  `npm start`
