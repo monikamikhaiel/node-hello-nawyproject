@@ -122,5 +122,5 @@ jobs:
       #   working-directory: ./terraform
      
       - name: Terraform plan & apply
-        run: terraform plan -no-color -input=false && terraform apply -auto-approve -input=false
+        run: terraform plan -no-color -input=false && terraform apply -auto-approve -input=false -var="Github_sha=${{ env.COMMIT_SHORT_SHA }}"
         working-directory: ./terraform
