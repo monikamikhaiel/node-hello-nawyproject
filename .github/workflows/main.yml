@@ -18,11 +18,11 @@ jobs:
     environment: local 
     outputs:
       commit: ${{ steps.short-sha.outputs.COMMIT_SHORT_SHA }}
-    env: 
-         region: eu-north-1
-         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-         COMMIT_SHORT_SHA: latest
+    # env: 
+    #      region: eu-north-1
+    #      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+    #      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    #      COMMIT_SHORT_SHA: latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -46,24 +46,25 @@ jobs:
           commit_message: Fix code style issues with ${linter}
       - name: Checkout after lint 
         uses: actions/checkout@v4
-      # -
-        # name: Login to Docker Hub
-        # uses: docker/login-action@v3
-        # with:
-        #   username: ${{ secrets.DOCKERHUB_USERNAME }}
-        #   password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v4 # More information on this action can be found below in the 'AWS Credentials' section
+      -
+        name: Login to Docker Hub
+        uses: docker/login-action@v3
         with:
-          aws-region: eu-north-1
-      - name: Login to Amazon ECR
-        id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v2
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      # - name: Configure AWS credentials
+      #   uses: aws-actions/configure-aws-credentials@v4 # More information on this action can be found below in the 'AWS Credentials' section
+      #   with:
+      #     aws-region: eu-north-1
+      # - name: Login to Amazon ECR
+      #   id: login-ecr
+      #   uses: aws-actions/amazon-ecr-login@v2
       - name: Set short git commit SHA
         id: short-sha
         run: |
-          shortSha=$(git rev-parse  HEAD --short ${{ github.sha }})
-          echo "COMMIT_SHORT_SHA=$shortSha" >> $GITHUB_ENV
+          shortSha=$(git rev-parse  HEAD )
+          echo "COMMIT_SHORT_SHA=${GITHUB_SHA::7}" >> $GITHUB_ENV
+          # echo "COMMIT_SHORT_SHA=$shortSha" >> $GITHUB_ENV
       -
         name: Set up QEMU
         uses: docker/setup-qemu-action@v3
