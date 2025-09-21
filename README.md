@@ -20,3 +20,6 @@ the CI pipeline consists of 2 main jobs :
      ![alt text](image-1.png)
      \_
      `npm start`
+Enhancemments: 
+- NR lisence key as a secret 
+- commit tag to fetch the new commit 

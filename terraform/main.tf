@@ -66,7 +66,7 @@ resource "aws_ecs_task_definition" "node_project_task" {
   }
 }
 
-resource "aws_security_group" "ecs_service_sg" {
+resource "aws_security_group" "ecs_service_sg2"{
   name        = "ecs-service-sg2"
   description = "Allow HTTP traffic"
   vpc_id      = data.aws_vpc.default.id
@@ -167,7 +167,7 @@ resource "aws_ecs_service" "node_project_service" {
         data.aws_subnet.default_b.id,
         data.aws_subnet.default_c.id
       ]
-      security_groups = [aws_security_group.ecs_service_sg.id]
+      security_groups = [aws_security_group.ecs_service_sg2.id]
       assign_public_ip = true # to access dockerhub/ ECR o.w. will retrun timeout 
     }
 }
