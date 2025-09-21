@@ -76,7 +76,7 @@ resource "aws_security_group" "ecs_service_sg" {
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
     }
- # Rule 2 - allow port 80
+ # Rule 2 - allow port 80 for dockerhub/ ECR
   ingress {
     from_port   = 80
     to_port     = 80
@@ -84,7 +84,7 @@ resource "aws_security_group" "ecs_service_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  # Rule 3 - allow port 443
+  # Rule 3 - allow port 443 for dockerhub/ ECR
   ingress {
     from_port   = 443
     to_port     = 443
@@ -167,7 +167,7 @@ resource "aws_ecs_service" "node_project_service" {
         data.aws_subnet.default_c.id
       ]
       security_groups = [aws_security_group.ecs_service_sg.id]
-      assign_public_ip = true
+      assign_public_ip = true # to access dockerhub/ ECR o.w. will retrun timeout 
     }
 }
 output "domain_name"{
