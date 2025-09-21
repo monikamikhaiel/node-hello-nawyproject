@@ -35,8 +35,8 @@ resource "aws_ecs_task_definition" "node_project_task" {
   container_definitions    = jsonencode([
     {
       name      = "my-node-app"
-      # image     = "${var.DOCKERHUB_USERNAME}/nawy_node_app:${var.Github_sha}" # Replace with your container image
-      image     =  "public.ecr.aws/e7o5d6f3/nodejsnawy:${var.Github_sha}"
+      image     = "${var.DOCKERHUB_USERNAME}/nawy_node_app:${var.Github_sha}" # Replace with your container image
+    #  image     =  "public.ecr.aws/e7o5d6f3/nodejsnawy:${var.Github_sha}"
       cpu       = 256
       memory    = 512
       essential = true
@@ -61,6 +61,9 @@ resource "aws_ecs_task_definition" "node_project_task" {
     cpu_architecture        = "X86_64"
   }
 
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 resource "aws_security_group" "ecs_service_sg" {
   name        = "ecs-service-sg"
@@ -73,23 +76,21 @@ resource "aws_security_group" "ecs_service_sg" {
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
     }
-  #   {
-    
-  #   from_port   = 3000
-  #   to_port     = 3000
-  #   protocol    = "tcp"
-  #   cidr_blocks = ["0.0.0.0/0"]
-  
-  # },
-  #   {
-    
-  #   from_port   = 3000
-  #   to_port     = 3000
-  #   protocol    = "tcp"
-  #   cidr_blocks = ["0.0.0.0/0"]
-  
-  # }
-  # ]
+ # Rule 2 - allow port 80
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "http"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  # Rule 3 - allow port 443
+  ingress {
+    from_port   = 443
+    to_port     = 443
+    protocol    = "https"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
   egress {
     from_port   = 0
     to_port     = 0
@@ -147,9 +148,6 @@ resource "aws_lb_target_group" "ip-node-project-tg" {
   region = "eu-north-1"
 }
 
-# data "aws_vpc" "main" {
-# id = "vpc-05dc28f690951d201"
-# }
 resource "aws_ecs_service" "node_project_service" {
   name            = "node_project_service"
   cluster         = aws_ecs_cluster.node_project_cluster.id
@@ -171,4 +169,7 @@ resource "aws_ecs_service" "node_project_service" {
       security_groups = [aws_security_group.ecs_service_sg.id]
       assign_public_ip = true
     }
+}
+output "domain_name"{
+  value = "you can access the container through the following URL --> http://${aws_lb.node_project_lb.dns_name}"
 }
