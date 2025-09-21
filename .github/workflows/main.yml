@@ -2,8 +2,9 @@ name: build & deploy
 
 on:
   workflow_call:
-  pull_request:
-    types: [closed]
+  # pull_request:
+  #   types: [closed]
+  push:
     branches:
     - master
     
