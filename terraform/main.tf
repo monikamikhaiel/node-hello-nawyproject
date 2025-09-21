@@ -35,7 +35,8 @@ resource "aws_ecs_task_definition" "node_project_task" {
   container_definitions    = jsonencode([
     {
       name      = "my-node-app"
-      image     = "${var.DOCKERHUB_USERNAME}/nawy_node_app:${var.Github_sha}" # Replace with your container image
+      # image     = "${var.DOCKERHUB_USERNAME}/nawy_node_app:${var.Github_sha}" # Replace with your container image
+      image     =  "public.ecr.aws/e7o5d6f3/nodejsnawy:${var.Github_sha}"
       cpu       = 256
       memory    = 512
       essential = true
@@ -71,8 +72,24 @@ resource "aws_security_group" "ecs_service_sg" {
     to_port     = 3000
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
-  }
-
+    }
+  #   {
+    
+  #   from_port   = 3000
+  #   to_port     = 3000
+  #   protocol    = "tcp"
+  #   cidr_blocks = ["0.0.0.0/0"]
+  
+  # },
+  #   {
+    
+  #   from_port   = 3000
+  #   to_port     = 3000
+  #   protocol    = "tcp"
+  #   cidr_blocks = ["0.0.0.0/0"]
+  
+  # }
+  # ]
   egress {
     from_port   = 0
     to_port     = 0
