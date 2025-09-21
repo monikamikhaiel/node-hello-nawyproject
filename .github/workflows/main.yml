@@ -74,7 +74,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           push: true
-          tags: public.ecr.aws/e7o5d6f3/nodejsnawy:${{ env.GITHUB_ENV }}
+          tags: public.ecr.aws/e7o5d6f3/nodejsnawy:${{ env.COMMIT_SHORT_SHA }}
       # - name: edit main.tf 
       #   run: sed -i 's/image     = ".\+",/image     = "${var.DOCKERHUB_USERNAME}/nawy_node_app:${var.Github_sha}"",/' terraform/main.tf
   deploy:
