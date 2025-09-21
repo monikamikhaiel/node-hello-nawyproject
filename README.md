@@ -12,7 +12,7 @@ the CI pipeline consists of 2 main jobs :
 - build-push :
   1. check out the code and lints it and inntiate a second commit to the repo
   2. the commit tag is fetched and added as image tag
-  3. the build of the image includes NR to add monitoring layer 
+  3. the build of the image includes NR to add monitoring layer
 - deploy :
   1. run terraform that creates the following resources
      _ Security group
