@@ -71,15 +71,17 @@ jobs:
       -
         name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
-      - run: aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/e7o5d6f3
+      # - run: aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/e7o5d6f3
       -
         name: Build and push
         uses: docker/build-push-action@v6
         with:
           push: true
-          tags: public.ecr.aws/e7o5d6f3/nodejsnawy:${{ env.COMMIT_SHORT_SHA }}
-      # - name: edit main.tf 
-      #   run: sed -i 's/image     = ".\+",/image     = "${var.DOCKERHUB_USERNAME}/nawy_node_app:${var.Github_sha}"",/' terraform/main.tf
+          # tags: public.ecr.aws/e7o5d6f3/nodejsnawy:${{ env.COMMIT_SHORT_SHA }}
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/nawy_node_app:${{ env.COMMIT_SHORT_SHA }}
+
+
+
   deploy:
     runs-on: ubuntu-latest
     environment: local 
