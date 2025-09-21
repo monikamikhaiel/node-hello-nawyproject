@@ -16,6 +16,8 @@ jobs:
   build-push:
     runs-on: ubuntu-latest
     environment: local 
+    outputs:
+      commit: ${{ steps.short-sha.outputs.COMMIT_SHORT_SHA }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -71,7 +73,7 @@ jobs:
     needs: [build-push]
     env:
          TF_VAR_DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
-         TF_VAR_Github_sha: ${{ needs.build-push.outputs.commit_short_sha }}
+         TF_VAR_Github_sha: ${{ needs.build-push.outputs.commit }}
          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
          AWS_profile: nawy
