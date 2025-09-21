@@ -65,8 +65,9 @@ resource "aws_ecs_task_definition" "node_project_task" {
     create_before_destroy = true
   }
 }
+
 resource "aws_security_group" "ecs_service_sg" {
-  name        = "ecs-service-sg"
+  name        = "ecs-service-sg2"
   description = "Allow HTTP traffic"
   vpc_id      = data.aws_vpc.default.id
 
