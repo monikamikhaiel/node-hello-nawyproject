@@ -17,12 +17,11 @@ the CI pipeline consists of 2 main jobs :
   5. the build of the image includes newrelic to add monitoring layer
 - deploy :
   1. run terraform that creates the following resources :-
-
-     * Security group
-     * ECS task - ECS service 
-     * NLB --> access the website publicly
-     ![alt text](image-1.png)
-     \_
+     - Security group
+     - ECS task - ECS service
+     - NLB --> access the website publicly
+       ![alt text](image-1.png)
+       \_
 
 Area Of improvments :
 
