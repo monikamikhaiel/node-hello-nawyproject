@@ -17,6 +17,7 @@ terraform {
 # Configure the AWS Provider
 provider "aws" {
   region = "eu-north-1"
+  profile= "nawy"
 }
 
 variable "DOCKERHUB_USERNAME" {}
